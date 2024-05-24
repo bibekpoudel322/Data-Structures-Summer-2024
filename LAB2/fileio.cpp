@@ -4,18 +4,24 @@
 #include <algorithm> // for algorithms like sorting
 #include <cmath>     // for mathematical functions
 #include <iomanip>   // for formatting output
-#include <fstream>
 using namespace std;
 
+class Student
+{
+private:
+    string name;
+    int id;
+
+public:
+    Student(string name, int id)
+    {
+        this->name = name;
+        this->id = id;
+    }
+};
 int main()
 {
-    ofstream myfile("Newfile.txt");
-    if (!myfile.is_open())
-    {
-        cout << "File failed to open." << endl;
+    Student c1[] = {Student("Ali", 1), Student("James", 1), Student("Laila", 3)};
+    for
         return 0;
-    }
-    myfile << "Hello everyone" << endl;
-
-    return 0;
 }

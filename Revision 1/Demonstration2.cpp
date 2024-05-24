@@ -1,60 +1,23 @@
 #include <iostream>
-#include <string>    // for string manipulation
-#include <vector>    // for dynamic arrays
-#include <algorithm> // for algorithms like sorting
-#include <cmath>     // for mathematical functions
-#include <iomanip>   // for formatting output
-using namespace std;
-class Person
+
+// Function to increment a number by a specified value
+void incrementByReference(const int &num, int value)
 {
-private:
-    string name;
-    string idnum;
+    num += value; // This line would cause a compilation error because num is const
+    std::cout << "Inside function - Value of num: " << num << std::endl;
+    std::cout << "Inside function - Value of value: " << value << std::endl;
+}
 
-public:
-    Person(string nm, string idnm) : name(nm), idnum(idnm) {}
-    void printinfo()
-    {
-        cout << "Name : " << name << endl;
-        cout << "Id number : " << idnum << endl;
-    };
-    string getName()
-    {
-        return name;
-    }
-};
-
-class student : public Person
-{
-private:
-    string major;
-
-public:
-    student(string nm, string idnm, string m) : Person(nm, idnm), major(m) {}
-    void print()
-    {
-        printinfo();
-        cout << "Major: " << major << endl;
-    }
-};
-class faculty : public Person
-{
-private:
-    string rank;
-
-public:
-    faculty(string n, string id, string r) : Person(n, id), rank(r) {}
-    void print()
-    {
-        printinfo();
-        cout << "Rank : " << rank << endl;
-    }
-};
 int main()
 {
-    student s1("Bibek", "bp2376", "Computer engineering");
-    faculty f2("KASSAB", "KSA3232", "Assistant Professor");
-    f2.print();
-    s1.print();
+    int x = 5;
+
+    std::cout << "Before increment: " << x << std::endl;
+
+    // Call the function with x passed by reference
+    incrementByReference(x, 3);
+
+    std::cout << "After function call: " << x << std::endl;
+
     return 0;
 }

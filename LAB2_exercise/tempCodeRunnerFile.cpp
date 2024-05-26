@@ -1,0 +1,1 @@
+		removeFront(); // remove the node

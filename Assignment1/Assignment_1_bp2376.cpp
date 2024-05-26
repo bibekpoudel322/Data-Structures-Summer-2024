@@ -188,60 +188,170 @@ void DoublyLinkedList::display() const
 	cout << endl;
 }
 #endif
+
 // startercode_ends
 //===========================================================
 // Constructor to create Sentinel (dummy) nodes
 DoublyLinkedList::DoublyLinkedList()
 {
-	// to-do
+	head = nullptr;
+	tail = nullptr;
 }
 //============================================================
 DoublyLinkedList::~DoublyLinkedList()
 {
-	// to-do
+	while (!isEmpty())
+	{
+		removeFront();
+	}
 }
 //============================================================
 bool DoublyLinkedList::isEmpty() const
 {
-	// to-do
+	return head == NULL; // to-do
 }
 //============================================================
 const string &DoublyLinkedList::front() const
 {
-	// to-do
+	if (head == NULL)
+	{
+		throw runtime_error("List is empty");
+	} // to-do
+	else
+	{
+		return head->elem;
+	}
 }
 //============================================================
 const string &DoublyLinkedList::back() const
 {
-	// to-do
+	if (tail == NULL)
+	{
+		throw runtime_error("List is empty");
+	} // to-do
+	else
+	{
+		return tail->elem;
+	} // to-do
 }
 //============================================================
 void DoublyLinkedList::addFront(const string &elem)
 {
-	// to-do
+	Node *v = new Node(elem);
+	v->next = head;
+	v->prev = NULL;
+	if (head != nullptr)
+	{
+		head->prev = v;
+	}
+	head = v;
+	if (tail == nullptr)
+	{
+		tail = v;
+	}
 }
 //============================================================
 void DoublyLinkedList::addBack(const string &elem)
 {
-	// to-do
+	Node *v = new Node(elem);
+	v->next = NULL;
+	v->prev = tail;
+	if (tail != nullptr)
+	{
+		tail->next = v;
+	}
+	if (head == nullptr)
+	{
+		head = v;
+	}
+	tail = v;
 }
 //============================================================
 void DoublyLinkedList::removeFront()
 {
-	// to-do
+	if (head == nullptr)
+	{
+		throw runtime_error("List is empty");
+	}
+	Node *old = head;
+	head = head->next;
+	if (head != nullptr)
+	{
+		head->prev = nullptr;
+	}
+	delete old;
+	if (head == nullptr)
+	{
+		tail = nullptr; // Update tail if the list becomes empty
+	}
 }
 //============================================================
+
 void DoublyLinkedList::removeBack()
 {
-	// to-do
+	if (tail == nullptr)
+	{
+		throw runtime_error("List is empty");
+	}
+	Node *old = tail;
+	tail = tail->prev;
+	if (tail != nullptr)
+	{
+		tail->next = nullptr;
+	}
+	delete old;
+	if (tail == nullptr)
+	{
+		head = nullptr; // Update head if the list becomes empty
+	}
 }
+
 //============================================================
+
 void DoublyLinkedList::reverseList()
 {
-	// to-do
+	if (head == NULL)
+	{
+		throw runtime_error("List is empty");
+	}
+	Node *curr = head;
+	while (curr != NULL)
+	{
+		Node *temp = curr->next;
+		curr->next = curr->prev;
+		curr->prev = temp;
+		curr = curr->prev;
+	}
+	Node *temp = head;
+	head = tail;
+	tail = temp;
 }
 //============================================================
 bool DoublyLinkedList::isPalindrome() const
 {
-	// to-do
+	if (head == nullptr)
+	{
+		// Empty list is considered a palindrome
+		return true;
+	}
+
+	Node *curr = head;
+	Node *temp = tail;
+
+	while (curr != nullptr && temp != nullptr)
+	{
+		// Compare elements from the beginning and end
+		if (curr->elem != temp->elem)
+		{
+			// If elements don't match, it's not a palindrome
+			return false;
+		}
+
+		// Move towards the middle
+		curr = curr->next;
+		temp = temp->prev;
+	}
+
+	// If the loop completes without finding any mismatches, it's a palindrome
+	return true;
 }

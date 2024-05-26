@@ -1,8 +1,8 @@
 /**
- * @file:
- * @author
+ * @file:Assignment_1_bp2376.cpp
+ * @author:Bibek Poudel
  * @description Doubly LinkedList implementation in C++
- * @date 2023-03-22
+ * @date 2024-05-26
  */
 // startercode_begins
 #include <iostream>

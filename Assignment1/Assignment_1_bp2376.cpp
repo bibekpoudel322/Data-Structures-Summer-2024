@@ -212,102 +212,68 @@ DoublyLinkedList::~DoublyLinkedList()
 //============================================================
 bool DoublyLinkedList::isEmpty() const
 {
-	return head == NULL; // to-do
+	return head->next == tail; // list is empty if head points to tail
 }
 //============================================================
 const string &DoublyLinkedList::front() const
 {
-	if (head == NULL)
+	if (isEmpty())
 	{
 		throw runtime_error("List is empty");
-	} // to-do
-	else
-	{
-		return head->elem;
 	}
+	return head->next->elem; // return the element after the head sentinel node
 }
 //============================================================
 const string &DoublyLinkedList::back() const
 {
-	if (tail == NULL)
+	if (isEmpty())
 	{
 		throw runtime_error("List is empty");
-	} // to-do
-	else
-	{
-		return tail->elem;
-	} // to-do
+	}
+	return tail->prev->elem; // return the element before the tail sentinel node
 }
 //============================================================
 void DoublyLinkedList::addFront(const string &elem)
 {
-	Node *v = new Node(elem);
-	v->next = head;
-	v->prev = NULL;
-	if (head != nullptr)
-	{
-		head->prev = v;
-	}
-	head = v;
-	if (tail == nullptr)
-	{
-		tail = v;
-	}
+	Node *newNode = new Node(elem);
+	newNode->next = head->next;
+	newNode->prev = head;
+	head->next->prev = newNode;
+	head->next = newNode;
 }
 //============================================================
 void DoublyLinkedList::addBack(const string &elem)
 {
-	Node *v = new Node(elem);
-	v->next = NULL;
-	v->prev = tail;
-	if (tail != nullptr)
-	{
-		tail->next = v;
-	}
-	if (head == nullptr)
-	{
-		head = v;
-	}
-	tail = v;
+	Node *newNode = new Node(elem);
+	newNode->next = tail;
+	newNode->prev = tail->prev;
+	tail->prev->next = newNode;
+	tail->prev = newNode;
 }
 //============================================================
 void DoublyLinkedList::removeFront()
 {
-	if (head == nullptr)
+	if (isEmpty())
 	{
 		throw runtime_error("List is empty");
 	}
-	Node *old = head;
-	head = head->next;
-	if (head != nullptr)
-	{
-		head->prev = nullptr;
-	}
-	delete old;
-	if (head == nullptr)
-	{
-		tail = nullptr; // Update tail if the list becomes empty
-	}
+	Node *temp = head->next;
+	head->next = temp->next;
+	temp->next->prev = head;
+	delete temp;
 }
 //============================================================
 
 void DoublyLinkedList::removeBack()
 {
-	if (tail == nullptr)
+	if (isEmpty())
 	{
 		throw runtime_error("List is empty");
 	}
-	Node *old = tail;
-	tail = tail->prev;
-	if (tail != nullptr)
-	{
-		tail->next = nullptr;
-	}
-	delete old;
-	if (tail == nullptr)
-	{
-		head = nullptr; // Update head if the list becomes empty
-	}
+	Node *temp = tail->prev;
+	tail->prev = temp->prev;
+	temp->prev->next = tail;
+	delete temp;
 }
 
 //============================================================

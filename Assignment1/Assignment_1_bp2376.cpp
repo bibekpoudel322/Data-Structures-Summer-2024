@@ -194,8 +194,10 @@ void DoublyLinkedList::display() const
 // Constructor to create Sentinel (dummy) nodes
 DoublyLinkedList::DoublyLinkedList()
 {
-	head = nullptr;
-	tail = nullptr;
+	head = new Node(); // create head sentinel node
+	tail = new Node(); // create tail sentinel node
+	head->next = tail; // head points to tail
+	tail->prev = head; // tail points to head
 }
 //============================================================
 DoublyLinkedList::~DoublyLinkedList()
@@ -204,6 +206,8 @@ DoublyLinkedList::~DoublyLinkedList()
 	{
 		removeFront();
 	}
+	delete head; // delete head sentinel node
+	delete tail; // delete tail sentinel node
 }
 //============================================================
 bool DoublyLinkedList::isEmpty() const

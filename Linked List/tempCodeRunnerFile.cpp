@@ -1,1 +1,1 @@
-    cout << m1.front();
+fast

@@ -1,0 +1,124 @@
+#include <iostream>
+#include <stdexcept>
+
+typedef int Elem; // A user-defined element type
+
+class ArrayVector {
+public:
+    ArrayVector(); // constructor
+    ~ArrayVector(); // destructor
+    int size() const; // returns the number of elements “n”
+    bool empty() const; // returns “true” if the vector is empty
+    Elem& operator[](int i); // overloading the “[]” operator
+    Elem& at(int i); // returns element at index “i”
+    void erase(int i); // remove element at index “i”
+    void insert(int i, const Elem& e); // insert “e” at index “i”
+    void reserve(int N); // extend array size to N (unless it’s already bigger than N)
+
+private:
+    int capacity; // current array size, i.e., “N”
+    int n; // number of elements in the vector
+    Elem* A; // Array of elements of type “Elem”
+};
+
+// Constructor
+ArrayVector::ArrayVector() {
+//WRITE CODE HERE
+}
+
+// Destructor
+ArrayVector::~ArrayVector() {
+//WRITE CODE HERE
+}
+
+// Returns the number of elements “n”
+int ArrayVector::size() const {
+//WRITE CODE HERE
+}
+
+// Returns “true” if the vector is empty
+bool ArrayVector::empty() const {
+//WRITE CODE HERE
+}
+
+// Overloading the “[]” operator
+Elem& ArrayVector::operator[](int i) {
+    //WRITE CODE HERE
+}
+
+// Returns element at index “i”
+Elem& ArrayVector::at(int i) {
+//WRITE CODE HERE
+}
+
+// Remove element at index “i”
+void ArrayVector::erase(int i) {
+ //WRITE CODE HERE
+}
+
+// Extend array size to N (unless it’s already bigger than N)
+void ArrayVector::reserve(int N) {
+ //WRITE CODE HERE
+}
+
+// Insert “e” at index “i”
+void ArrayVector::insert(int i, const Elem& e) {
+//WRITE CODE HERE
+}
+
+int main() {
+
+
+//  ArrayVector vector;
+    
+// Print the current size of the vector
+//  std::cout << "Vector size: " << vector.size() << std::endl;
+
+    // Insert elements
+   // vector.insert(0, 10);
+   // vector.insert(1, 20);
+   // vector.insert(2, 30);
+   // vector.insert(3, 40);
+   // vector.insert(4, 50);
+    
+      // Print elements
+   // std::cout << "Vector elements: ";
+   // for (int i = 0; i < vector.size(); i++) {
+     //   std::cout << vector[i] << " ";
+   // }
+   // std::cout << std::endl;
+    
+      // Print the current size of the vector
+   // std::cout << "Vector size: " << vector.size() << std::endl;
+
+    // vector.insert(2, 60);
+    
+
+    // Print elements
+    // std::cout << "Vector elements: ";
+    // for (int i = 0; i < vector.size(); i++) {
+      //  std::cout << vector[i] << " ";
+   // }
+   // std::cout << std::endl;
+
+    // Print the current size of the vector
+//    std::cout << "Vector size: " << vector.size() << std::endl;
+
+
+    // Insert more elements
+  //  vector.insert(3, 70);
+//    vector.insert(4, 80);
+  //  vector.insert(5, 100);
+
+    // Print elements after inserting more
+    // std::cout << "Vector elements after inserting more: ";
+   // for (int i = 0; i < vector.size(); i++) {
+    //    std::cout << vector[i] << " ";
+   // }
+   // std::cout << std::endl;
+
+    // Print the final size of the vector
+   // std::cout << "Final vector size: " << vector.size() << std::endl;
+
+ //   return 0;
+}

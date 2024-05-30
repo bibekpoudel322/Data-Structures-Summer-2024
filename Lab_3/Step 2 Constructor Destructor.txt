@@ -1,0 +1,11 @@
+// Constructor
+ArrayVector::ArrayVector() {
+    capacity = 5; // Start with a small capacity
+    n = 0; // Initially, no elements
+    A = new Elem[capacity]; // Allocate memory for the array
+}
+
+// Destructor
+ArrayVector::~ArrayVector() {
+    delete[] A; // Deallocate the memory for the array
+}

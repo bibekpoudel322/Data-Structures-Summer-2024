@@ -1,0 +1,10 @@
+// Extend array size to N (unless it’s already bigger than N)
+void ArrayVector::reserve(int N) {
+    if (capacity >= N) return;
+    Elem* B = new Elem[N]; // Resize the array
+    for (int j = 0; j < n; j++) // Copy contents to new array
+        B[j] = A[j];
+    delete[] A; // Discard old array
+    A = B; // Make B the new array
+    capacity = N; // Set new capacity
+}

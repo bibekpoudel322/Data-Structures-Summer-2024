@@ -1,0 +1,10 @@
+// Remove element at index “i”
+void ArrayVector::erase(int i) {
+    if (i < 0 || i >= n) {
+        throw std::out_of_range("Index out of bounds");
+    }
+    for (int j = i; j < n - 1; j++) {
+        A[j] = A[j + 1];
+    }
+    n--;
+}

@@ -104,62 +104,62 @@ bool isgeq(char opA, char opB)
 template <typename T>
 MyStack<T>::MyStack(int N)
 {
-	this->N = N;
-	array = new T[N];
-	n = 0;
+	this->N = N;	  // Set the capacity of the stack
+	array = new T[N]; // Create an array of size N
+	n = 0;			  // Initialize the number of elements in the stack to 0
 }
 template <typename T>
 MyStack<T>::~MyStack()
 {
-	delete[] array;
+	delete[] array; // Deallocate the memory
 }
 template <typename T>
-void MyStack<T>::push(T elem)
+void MyStack<T>::push(T elem) // Push an element in the stack
 {
 	if (n == N)
-		throw runtime_error("Stack Overflow");
-	array[n++] = elem;
+		throw logic_error("Stack Overflow"); // Check if the stack is full
+	array[n++] = elem;						 // Add the element to the stack
 }
 template <typename T>
 void MyStack<T>::pop()
 {
-	if (n == 0)
-		throw runtime_error("Stack Underflow");
-	n--;
+	if (n == 0) // Check if the stack is empty
+		throw logic_error("Stack Underflow");
+	n--; // Remove the element from the stack
 }
 template <typename T>
 T &MyStack<T>::top()
 {
-	if (n == 0)
-		throw runtime_error("Stack is Empty");
-	return array[n - 1];
+	if (n == 0)								 // Check if the stack is empty
+		throw logic_error("Stack is Empty"); // Throw an exception if the stack is empty
+	return array[n - 1];					 // Return the top element of the stack
 }
 template <typename T>
-int MyStack<T>::size()
+int MyStack<T>::size() // Return the number of elements in the stack
 {
 	return n;
 }
 template <typename T>
 bool MyStack<T>::empty()
 {
-	return n == 0;
+	return n == 0; // Return true if the stack is empty
 }
 
 bool isBalanced(string expression)
 {
-	MyStack<char> stack(expression.size());
-	for (int i = 0; i < expression.size(); i++)
+	MyStack<char> stack(expression.size());		// Create a stack to store the parentheses
+	for (int i = 0; i < expression.size(); i++) // Iterate through the expression
 	{
-		if (expression[i] == '(')
-			stack.push(expression[i]);
-		else if (expression[i] == ')')
+		if (expression[i] == '(')	   // If an opening parenthesis is found, push it to the stack
+			stack.push(expression[i]); // Push the opening parenthesis to the stack
+		else if (expression[i] == ')') // If a closing parenthesis is found
 		{
-			if (stack.empty())
-				return false;
-			stack.pop();
+			if (stack.empty()) // If the stack is empty, return false
+				return false;  //	Return false if the stack is empty
+			stack.pop();	   // Pop the opening parenthesis from the stack
 		}
 	}
-	return stack.empty();
+	return stack.empty(); // Return true if the stack is empty
 }
 
 string infix2postfix(string infix)
@@ -167,7 +167,7 @@ string infix2postfix(string infix)
 	string postfix = "";			   // Initialize an empty string to store the postfix expression
 	MyStack<char> stack(infix.size()); // Create a stack to store operators and parentheses
 
-	// Step 2: Scan Infix expression from left to right
+	// Scan Infix expression from left to right
 	for (char c : infix)
 	{
 		if (!isBalanced(infix))
@@ -177,13 +177,13 @@ string infix2postfix(string infix)
 
 		char currentChar = c;
 
-		// Step 3: If the scanned character is an operand, add it to the postfix expression
+		// If the scanned character is an operand, add it to the postfix expression
 		if (isdigit(currentChar))
 			postfix += currentChar;
-		// Step 4: If '(' is found, push it to the stack
+		// If '(' is found, push it to the stack
 		else if (currentChar == '(')
 			stack.push(currentChar);
-		// Step 5: If an operator is found
+		// If an operator is found
 		else if (isOperator(currentChar))
 		{
 			// a. Pop from the stack and add each operator from the top of the stack with the same or higher precedence until '(' or an operator with lower precedence is found or the stack is empty
@@ -195,7 +195,7 @@ string infix2postfix(string infix)
 			// b. Push the operator to the stack
 			stack.push(currentChar);
 		}
-		// Step 6: If ')' is found
+		// If ')' is found
 		else if (currentChar == ')')
 		{
 			// a. Pop from the stack and add each operator from the top of the stack until '(' is found
@@ -204,7 +204,7 @@ string infix2postfix(string infix)
 				postfix += stack.top();
 				stack.pop();
 			}
-			// b. Pop '(' from the stack
+			// Pop '(' from the stack
 			if (!stack.empty())
 			{
 				stack.pop();
@@ -216,7 +216,7 @@ string infix2postfix(string infix)
 		}
 	}
 
-	// Step 7: Repeat all remaining operators from the stack to the postfix
+	// Repeat all remaining operators from the stack to the postfix
 	while (!stack.empty())
 	{
 		if (stack.top() == '(')
@@ -228,43 +228,43 @@ string infix2postfix(string infix)
 	return postfix;
 }
 
-float evaluate(string postfix)
+float evaluate(string postfix) // Evaluate the postfix expression
 {
-	MyStack<float> stack(postfix.size());
-	for (int i = 0; i < postfix.size(); i++)
+	MyStack<float> stack(postfix.size());	 // Create a stack to store the operands
+	for (int i = 0; i < postfix.size(); i++) // Iterate through the postfix expression
 	{
-		char currentChar = postfix[i];
-		if (isalnum(currentChar))
-			stack.push(currentChar - '0');
-		else if (isOperator(currentChar))
+		char currentChar = postfix[i];	   // Get the current character
+		if (isalnum(currentChar))		   // If the character is an operand, push it to the stack
+			stack.push(currentChar - '0'); // Push the operand to the stack
+		else if (isOperator(currentChar))  // If the character is an operator
 		{
-			float operand2 = stack.top();
-			stack.pop();
-			float operand1 = stack.top();
-			stack.pop();
-			float result;
-			switch (currentChar)
+			float operand2 = stack.top(); // Pop the top two operands from the stack
+			stack.pop();				  // Pop the top operand from the stack
+			float operand1 = stack.top(); // Pop the top operand from the stack
+			stack.pop();				  //	Pop the top operand from the stack
+			float result;				  // Perform the operation based on the operator
+			switch (currentChar)		  // Perform the operation based on the operator
 			{
 			case '+':
-				result = operand1 + operand2;
+				result = operand1 + operand2; // Perform addition
 				break;
 			case '-':
-				result = operand1 - operand2;
+				result = operand1 - operand2; // Perform subtraction
 				break;
 			case '*':
-				result = operand1 * operand2;
+				result = operand1 * operand2; // Perform multiplication
 				break;
 			case '/':
-				if (operand2 == 0)
-					throw runtime_error("Division by Zero");
-				result = operand1 / operand2;
+				if (operand2 == 0)							 // Check for division by zero
+					throw runtime_error("Division by Zero"); // Throw an exception if division by zero is attempted
+				result = operand1 / operand2;				 // Perform division
 				break;
 			case '^':
-				result = pow(operand1, operand2);
+				result = pow(operand1, operand2); // Perform exponentiation
 				break;
 			}
-			stack.push(result);
+			stack.push(result); // Push the result back to the stack
 		}
 	}
-	return stack.top();
+	return stack.top(); // Return the final result
 }

@@ -1,0 +1,38 @@
+#include <iostream>
+#include <string>
+
+class MathException {
+private:
+    std::string errMsg; // The error message that is stored in the object
+
+public:
+    MathException(const std::string& err) : errMsg(err) { }
+
+    std::string getError() { return errMsg; }
+};
+
+int main() {
+    try {
+        // Some code can go here...
+
+        int x =1;
+        int y = 4;
+        int z = 2;
+
+        // Assuming y and z are initialized
+
+        if (z == 0) {
+            throw MathException("Can't divide by zero!");
+        } else {
+            x = y / z;
+            std::cout << x << std::endl;
+        }
+
+        // Some code can go here...
+    }
+    catch (MathException& obj) {
+        std::cout << obj.getError() << std::endl;
+    }
+
+    return 0;
+}

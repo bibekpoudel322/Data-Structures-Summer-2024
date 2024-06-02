@@ -191,97 +191,97 @@ void DoublyLinkedList::display() const
 // startercode_ends
 //===========================================================
 // Constructor to create Sentinel (dummy) nodes
-DoublyLinkedList::DoublyLinkedList()
+DoublyLinkedList::DoublyLinkedList() // Constructor to create Sentinel (dummy) nodes
 {
-	head = new Node();
-	tail = new Node();
-	head->next = tail;
-	tail->prev = head;
+	head = new Node(); // Constructor to create head (dummy) nodes
+	tail = new Node(); // Constructor to create tail (dummy) nodes
+	head->next = tail; // assign tail to head->next
+	tail->prev = head; // assign head to tail->prev
 }
 //============================================================
-DoublyLinkedList::~DoublyLinkedList()
+DoublyLinkedList::~DoublyLinkedList() // Destructor to clean up all nodes
 {
-	while (!isEmpty())
+	while (!isEmpty()) // while list is not empty
 	{
-		removeFront();
+		removeFront(); // remove front node
 	}
-	delete head;
-	delete tail;
+	delete head; // delete head;
+	delete tail; // delete tail;
 }
 //============================================================
-bool DoublyLinkedList::isEmpty() const
+bool DoublyLinkedList::isEmpty() const // return true if the list is empty
 {
-	return head->next == tail; // to-do
+	return head->next == tail; // if head->next points to tail, then list is empty
 }
 //============================================================
 const string &DoublyLinkedList::front() const
 {
-	if (isEmpty())
+	if (isEmpty()) // if list is empty
 	{
-		throw runtime_error("List is Empty");
+		throw runtime_error("List is Empty"); // throw an exception
 	}
 	else
 	{
-		return head->next->elem;
+		return head->next->elem; // return the element of the first valid node
 	}
 }
 //============================================================
-const string &DoublyLinkedList::back() const
+const string &DoublyLinkedList::back() const // returns the const reference of the element from last valid Node of the list
 {
-	if (isEmpty())
+	if (isEmpty()) // if list is empty
 	{
-		throw runtime_error("List is Empty");
+		throw runtime_error("List is Empty"); // throw an exception
 	}
 	else
 	{
-		return tail->prev->elem;
+		return tail->prev->elem; // return the element of the last valid node
 	}
 }
 //============================================================
-void DoublyLinkedList::addFront(const string &elem)
+void DoublyLinkedList::addFront(const string &elem) // add a new node to the front of list (after head)
 {
-	Node *v = new Node(elem); // to-do
-	v->prev = head;
-	v->next = head->next;
-	head->next->prev = v;
-	head->next = v;
+	Node *v = new Node(elem); // create a new node
+	v->prev = head;			  // assign head to v->prev
+	v->next = head->next;	  // assign head->next to v->next
+	head->next->prev = v;	  // assign v to head->next->prev
+	head->next = v;			  // assign v to head->next
 }
 //============================================================
-void DoublyLinkedList::addBack(const string &elem)
+void DoublyLinkedList::addBack(const string &elem) // add a new node to the back of the list (before tail)
 {
-	Node *v = new Node(elem); // to-do
-	v->next = tail;
-	v->prev = tail->prev;
-	tail->prev->next = v;
-	tail->prev = v;
+	Node *v = new Node(elem); // create a new node
+	v->next = tail;			  // assign tail to v->next
+	v->prev = tail->prev;	  // assign tail->prev to v->prev
+	tail->prev->next = v;	  // assign v to tail->prev->next
+	tail->prev = v;			  // assign v to tail->prev
 }
 //============================================================
 void DoublyLinkedList::removeFront()
 {
-	if (isEmpty())
+	if (isEmpty()) // check if the list is empty
 	{
-		throw runtime_error("List is Empty");
+		throw runtime_error("List is Empty"); // throw an exception
 	}
 	else
 	{
-		Node *old = head->next;
-		head->next = old->next;
-		old->next->prev = old->prev;
-		delete old;
+		Node *old = head->next;		 // store the first valid node in old
+		head->next = old->next;		 // assign old->next to head->next
+		old->next->prev = old->prev; // assign old->prev to old->next->prev
+		delete old;					 // delete old
 	}
 }
 //============================================================
-void DoublyLinkedList::removeBack()
+void DoublyLinkedList::removeBack() // remove last node from list, throw an exception if the list is empty
 {
 	if (isEmpty())
 	{
-		throw runtime_error("List is Empty");
+		throw runtime_error("List is Empty"); // throw an exception
 	}
 	else
 	{
-		Node *old = tail->prev;
-		tail->prev = old->prev;
-		old->prev->next = old->next;
+		Node *old = tail->prev;		 // store the last valid node in old
+		tail->prev = old->prev;		 // assign old->prev to tail->prev
+		old->prev->next = old->next; // assign old->next to old->prev->next
 	}
 }
 //============================================================
@@ -289,28 +289,28 @@ void DoublyLinkedList::reverseList()
 {
 	if (isEmpty())
 	{
-		throw runtime_error("List is Empty");
+		throw runtime_error("List is Empty"); // throw an exception
 	}
 	else
 	{
-		Node *current = head->next;
-		Node *temp = nullptr;
-		while (current != tail)
+		Node *current = head->next; // store the first valid node in current
+		Node *temp = nullptr;		// create a temporary node
+		while (current != tail)		// while current is not tail
 		{
 			// Swap prev and next pointers of the current node
-			temp = current->prev;
-			current->prev = current->next;
-			current->next = temp;
-			current = current->prev;
+			temp = current->prev;		   // store current->prev in temp
+			current->prev = current->next; // assign current->next to current->prev
+			current->next = temp;		   // assign temp to current->next
+			current = current->prev;	   // assign current->prev to current
 		}
 		// Now, current is null, and temp points to the last node (before head)
-		temp = head->next;
-		head->next = tail->prev;
-		tail->prev = temp;
+		temp = head->next;		 // store head->next in temp
+		head->next = tail->prev; // assign tail->prev to head->next
+		tail->prev = temp;		 // assign temp to tail->prev
 
 		// Update the next and prev pointers of the first and last nodes
-		head->next->prev = head;
-		tail->prev->next = tail;
+		head->next->prev = head; // assign head to head->next->prev
+		tail->prev->next = tail; // assign tail to tail->prev->next
 	}
 }
 
@@ -319,21 +319,21 @@ bool DoublyLinkedList::isPalindrome() const
 {
 	if (isEmpty())
 	{
-		throw runtime_error("List is Empty");
+		throw runtime_error("List is Empty"); // throw an exception
 	}
 	else
 	{
-		Node *traversalfront = head->next;
-		Node *traversalback = tail->prev;
-		while (traversalfront != traversalback && traversalfront->prev != traversalback)
+		Node *traversalfront = head->next;												 // store head->next in traversalfront
+		Node *traversalback = tail->prev;												 // store tail->prev in traversalback
+		while (traversalfront != traversalback && traversalfront->prev != traversalback) // check if traversalfront is not equal to traversalback and traversalfront->prev is not equal to traversalback
 		{
-			if (traversalfront->elem != traversalback->elem)
+			if (traversalfront->elem != traversalback->elem) // check if traversalfront->elem is not equal to traversalback->elem
 			{
-				return false;
+				return false; // return false
 			}
-			traversalfront = traversalfront->next;
-			traversalback = traversalback->prev;
+			traversalfront = traversalfront->next; // assign traversalfront->next to traversalfront
+			traversalback = traversalback->prev;   // assign traversalback->prev to traversalback
 		}
-		return true;
+		return true; // return true
 	}
 }

@@ -62,6 +62,10 @@ public:
     {
         return arr[frontIndex];
     }
+    int back()
+    {
+        return arr[rearIndex - 1];
+    }
     void display()
     {
         int traversal = frontIndex;
@@ -73,6 +77,18 @@ public:
             traversal = (traversal + 1) % capacity;
         }
     }
+    int element_sum()
+    {
+        int sum = 0;
+        int traversal = frontIndex;
+        while (traversal != rearIndex - 1)
+        {
+            sum += arr[traversal];
+            traversal = (traversal + 1) % size;
+        }
+        sum += arr[traversal];
+        return sum;
+    }
 };
 int main()
 {
@@ -82,8 +98,9 @@ int main()
     myqueue.enqueue(130);
     cout << "Size of the queue is: " << myqueue.size_of_queue() << endl;
     myqueue.display();
-    myqueue.dequeue();
     myqueue.display();
     cout << "Size of the queue is: " << myqueue.size_of_queue() << endl;
+    cout << "Rear of the queue is :" << myqueue.back();
+    cout << "Sum of elements of the queue is : " << myqueue.element_sum();
     return 0;
 }

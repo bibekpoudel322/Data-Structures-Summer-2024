@@ -5,86 +5,27 @@
 #include <cmath>     // for mathematical functions
 #include <iomanip>   // for formatting output
 using namespace std;
-class stack
+// sum of even integers using recursion upto n;
+int recursion_sum(int n)
 {
-private:
-    int *arr;
-    int capacity;
-    int size;
-    int top;
-
-public:
-    stack(int capacity)
+    if (n == 0)
     {
-        this->capacity = capacity;
-        arr = new int[capacity];
-        size = 0;
-        top = -1;
+        return 0;
     }
-    ~stack()
+    if (n % 2 == 0)
     {
-        delete[] arr;
+        return n + recursion_sum(n - 1);
     }
-    bool is_full()
+    else
     {
-        return capacity == size;
+        return recursion_sum(n - 1);
     }
-    bool is_empty()
-    {
-        return size == 0;
-    }
-    int t()
-    {
-        return top;
-    }
-    void push(int element)
-    {
-        if (is_full())
-        {
-            throw logic_error("Stack is Full. ");
-        }
-        arr[++top] = element;
-        size++;
-    }
-    void pop()
-    {
-        if (is_empty())
-        {
-            throw logic_error("Stack is empty. ");
-        }
-        top--;
-        size--;
-    }
-    void display()
-    {
-        if (is_empty())
-        {
-            throw logic_error("Stack is empty. ");
-        }
-        cout << "Elements in the stack: " << " ";
-        for (int i = 0; i < size; i++)
-        {
-            cout << arr[i] << " ";
-        }
-        cout << endl;
-    }
-};
+}
 int main()
 {
-    stack myStack(5);
-    myStack.push(10);
-    myStack.push(20);
-    myStack.push(30);
-    myStack.display(); // Expected output: Elements in the stack: 10 20 30
-    myStack.pop();
-    myStack.display(); // Expected output: Elements in the stack: 10 20
-
-    stack boundaryStack(2); // Capacity set to 2
-    boundaryStack.push(10);
-    boundaryStack.push(20);
-    boundaryStack.pop();
-    boundaryStack.pop();
-    boundaryStack.pop(); // Uncommenting this line should throw an exception (stack empty)
-
+    int num;
+    cout << "Enter a number: ";
+    cin >> num;
+    cout << "The even sum is : " << recursion_sum(num) << endl;
     return 0;
 }

@@ -105,26 +105,60 @@ public:
         delete header;
         delete trailer;
     }
+
+    int middle()
+    {
+        Node *fast = header->next;
+        Node *slower = header->next;
+        while (fast != trailer && fast->next != trailer)
+        {
+            fast = fast->next->next;
+            slower = slower->next;
+        }
+        return slower->elem;
+    }
     void reverse()
     {
-        cout << "Before reverse : " << endl;
-        display();
-
-        struct Node *temp = NULL;
-        Node *current = header->next;
-        Node *oldtrailer = trailer;
-        trailer = header;
-
-        while (current != oldtrailer)
+        if (is_empty())
         {
-            temp = current->prev;
+            throw logic_error("The list is empty");
+        }
+        Node *previous = NULL;
+        Node *current = header->next;
+        while (current != trailer)
+        {
+            previous = current->prev;
             current->prev = current->next;
-            current->next = temp;
+            current->next = previous;
             current = current->prev;
         }
-        header->next = temp->prev;
-        cout << "After reverse : " << endl;
-        display();
+        previous = header->next;      // store head->next in temp
+        header->next = trailer->prev; // assign tail->prev to head->next
+        trailer->prev = previous;
+        header->next->prev = header;
+        trailer->prev->next = trailer;
+    }
+    void reverse_by_copying()
+    {
+        if (is_empty())
+        {
+            throw logic_error("The list is empty");
+        }
+        Mylinkedlist l2;
+        Node *traversal = header->next;
+        while (traversal != trailer)
+        {
+            l2.add_front(traversal->elem);
+            traversal = traversal->next;
+            remove_front();
+        }
+        traversal = l2.header->next;
+        while (traversal != l2.trailer)
+        {
+            add_back(traversal->elem);
+            traversal = traversal->next;
+        }
+        l2.~Mylinkedlist();
     }
 };
 
@@ -132,10 +166,12 @@ int main()
 {
     Mylinkedlist myList;
     myList.add_front(5);
+    myList.add_front(21);
     myList.add_front(10);
     myList.add_back(15);
     myList.add_front(1115);
     myList.display(); // Expected output: Elements in the list : 10 5 15
-    myList.reverse();
+    myList.reverse_by_copying();
+    myList.display();
     return 0;
 }

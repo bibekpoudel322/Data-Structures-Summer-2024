@@ -1,1 +1,1 @@
-        if (is_empty())
+                traversal = traversal->next;

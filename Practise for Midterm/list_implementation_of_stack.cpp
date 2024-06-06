@@ -139,15 +139,32 @@ public:
     {
         l1.display();
     }
+    void reverse()
+    {
+        Stack s2;
+        while (!l1.is_empty())
+        {
+            s2.l1.addFront(l1.front());
+            {
+                l1.removeFront();
+            }
+        }
+        s2.display();
+    }
 };
 int main()
 {
     Stack myStack;
-    myStack.push(10);
-    myStack.push(20);
-    myStack.push(30);
-    myStack.display(); // Expected output: Elements in the stack: 10 20 30
-    myStack.pop();
-    myStack.display(); // Expected output: Elements in the stack: 10 20
+    int num;
+    // Binary Implementation of stack;
+    cout
+        << "Enter a number to evaluate binary";
+    cin >> num;
+    while (num != 0)
+    {
+        myStack.push(num % 2);
+        num = num / 2;
+    }
+    myStack.display();
     return 0;
 }

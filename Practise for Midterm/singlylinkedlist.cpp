@@ -68,24 +68,21 @@ public:
     }
     void reverse()
     {
-        Node *previous = NULL;
-        Node *current = header;
-        Node *next = NULL;
         if (is_empty())
         {
-            throw logic_error("List is empty");
+            throw logic_error("The list is empty");
         }
+        Node *next = NULL;
+        Node *current = header;
+        Node *previous = NULL;
         while (current != NULL)
         {
-            if (current->next == NULL)
-            {
-                header = current;
-            }
             next = current->next;
             current->next = previous;
             previous = current;
             current = next;
         }
+        header = previous;
     }
     void insert_after(int element, int whatt)
     {
@@ -106,6 +103,75 @@ public:
             cout << "Element not found" << endl;
         }
     }
+    int middle()
+    {
+        Node *fast = header;
+        Node *slower = header;
+        while (fast != NULL && fast->next != NULL)
+        {
+            fast = fast->next->next;
+            slower = slower->next;
+        }
+        return slower->elem;
+    }
+    int rotate(int k)
+    {
+        if (is_empty())
+        {
+            throw logic_error("The list is empty");
+        }
+        int size = 0;
+        Node *traversal = header;
+        while (traversal != NULL)
+        {
+            size++;
+            traversal = traversal->next;
+        }
+        traversal = header;
+        for (int i = 0; i < size - k; i++)
+        {
+            traversal = traversal->next;
+        }
+        while (traversal != NULL)
+        {
+            addFront(traversal->elem);
+            traversal = traversal->next;
+        }
+    }
+    void remove_duplicates()
+    {
+        Node *current = header;
+        while (current != NULL)
+        {
+            Node *traversal = current->next;
+            Node *previous = NULL;
+            while (traversal != NULL)
+            {
+                if (traversal->elem == current->elem)
+                {
+                    if (traversal == header)
+                    {
+                        header = traversal->next;
+                        delete traversal;
+                        traversal = header; // Move traversal to the new header
+                    }
+                    else
+                    {
+                        Node *old = traversal;
+                        previous->next = old->next;
+                        traversal = previous->next; // Move traversal to the next node after deletion
+                        delete old;
+                    }
+                }
+                else
+                {
+                    previous = traversal; // Move previous pointer only when not deleting
+                    traversal = traversal->next;
+                }
+            }
+            current = current->next;
+        }
+    }
 };
 int main()
 {
@@ -114,6 +180,10 @@ int main()
     list.addFront(10);
     list.addFront(15);
     list.insert_after(10, 66);
-    cout << "Front of the element is : " << list.front();
+    list.addFront(12);
+    list.addFront(5);
+    list.display();
+    list.remove_duplicates();
+    list.display();
     return 0;
 }

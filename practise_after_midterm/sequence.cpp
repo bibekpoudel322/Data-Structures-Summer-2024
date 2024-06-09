@@ -1,0 +1,178 @@
+#include <iostream>
+
+template <typename T>
+class Node
+{
+public:
+    T data;
+    Node *next;
+
+    Node(const T &value, Node *nextNode = nullptr) : data(value), next(nextNode) {}
+};
+
+template <typename T>
+class Sequence
+{
+public:
+    class Position
+    {
+    private:
+        Node<T> *node;
+
+    public:
+        Position(Node<T> *nodePtr) : node(nodePtr) {}
+
+        T &operator*() const
+        {
+            return node->data;
+        }
+
+        Position &operator++()
+        {
+            node = node->next;
+            return *this;
+        }
+
+        bool operator==(const Position &other) const
+        {
+            return node == other.node;
+        }
+
+        bool operator!=(const Position &other) const
+        {
+            return node != other.node;
+        }
+
+        friend class Sequence<T>;
+    };
+
+private:
+    Node<T> *head;
+    int size;
+
+public:
+    Sequence() : head(nullptr), size(0) {}
+
+    ~Sequence()
+    {
+        while (head != nullptr)
+        {
+            Node<T> *temp = head;
+            head = head->next;
+            delete temp;
+        }
+    }
+
+    void push_back(const T &value)
+    {
+        Node<T> *newNode = new Node<T>(value, nullptr);
+        if (head == nullptr)
+        {
+            head = newNode;
+        }
+        else
+        {
+            Node<T> *current = head;
+            while (current->next != nullptr)
+            {
+                current = current->next;
+            }
+            current->next = newNode;
+        }
+        size++;
+    }
+
+    void insert(const T &value, Position position)
+    {
+        Node<T> *node = position.node;
+        Node<T> *newNode = new Node<T>(value, node->next);
+        node->next = newNode;
+        size++;
+    }
+
+    void remove(Position position)
+    {
+        Node<T> *node = position.node;
+        if (node == head)
+        {
+            head = head->next;
+            delete node;
+        }
+        else
+        {
+            Node<T> *current = head;
+            while (current->next != node)
+            {
+                current = current->next;
+            }
+            current->next = node->next;
+            delete node;
+        }
+        size--;
+    }
+
+    Position atIndex(int index) const
+    {
+        if (index < 0 || index >= size)
+        {
+            throw std::out_of_range("Index out of range");
+        }
+        Position p(head);
+        for (int j = 0; j < index; j++)
+        {
+            ++p;
+        }
+        return p;
+    }
+
+    int indexOf(Position position) const
+    {
+        Position p(head);
+        int j = 0;
+        while (p != position)
+        {
+            ++p;
+            ++j;
+        }
+        return j;
+    }
+
+    int getSize() const
+    {
+        return size;
+    }
+};
+
+int main()
+{
+    Sequence<int> sequence;
+
+    sequence.push_back(1);
+    sequence.push_back(2);
+    sequence.push_back(3);
+    sequence.push_back(4);
+
+    Sequence<int>::Position pos = sequence.atIndex(2);
+    std::cout << "Element at index 2: " << *pos << std::endl;
+
+    Sequence<int>::Position newPos = sequence.atIndex(1);
+    sequence.insert(5, newPos);
+    std::cout << "Element at index 2 after insertion: " << *sequence.atIndex(2) << std::endl;
+
+    Sequence<int>::Position removePos = sequence.atIndex(3);
+    sequence.remove(removePos);
+    std::cout << "Size after removal: " << sequence.getSize() << std::endl;
+
+    int valueToFind = 3;
+    Sequence<int>::Position findPos = sequence.atIndex(sequence.indexOf(sequence.atIndex(2)));
+    if (*findPos == valueToFind)
+    {
+        std::cout << "Value found at index: " << sequence.indexOf(findPos) << std::endl;
+    }
+    else
+    {
+        std::cout << "Element not found" << std::endl;
+    }
+
+    return 0;
+}

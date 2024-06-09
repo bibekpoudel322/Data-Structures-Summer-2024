@@ -1,0 +1,25 @@
+#include <iostream>
+#include <vector>
+
+int vectorSum2(const std::vector<int>& V) {
+    int sum = 0;
+    
+    // Using a const_iterator to iterate over the vector
+    for (std::vector<int>::const_iterator p = V.begin(); p != V.end(); ++p)
+        sum += *p;
+    
+    return sum;
+}
+
+int main() {
+    // Create a vector of integers
+    std::vector<int> myVector = {1, 2, 3, 4, 5};
+
+    // Calculate the sum of the elements using vectorSum2
+    int sum = vectorSum2(myVector);
+
+    // Print the result
+    std::cout << "Sum of elements: " << sum << std::endl;
+
+    return 0;
+}

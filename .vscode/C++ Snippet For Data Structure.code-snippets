@@ -3,7 +3,7 @@
     "scope": "cpp",
     "prefix": "ss",
     "body": [
-      "#include <iostream>\r\n#include <string>    // for string manipulation\r\n#include <vector>    // for dynamic arrays\r\n#include <algorithm> // for algorithms like sorting\r\n#include <cmath>     // for mathematical functions\r\n#include <iomanip>   // for formatting output\r\nusing namespace std;\r\n\r\nint main()\r\n{\r\n    int num;\r\n    cout << \"Enter a number: \";\r\n    cin >> num;\r\n    cout << \"You entered: \" << num << endl;\r\n    return 0;\r\n}"
+      "#include <iostream>\r\n#include <list>\r\n#include <fstream>\r\n#include <string>    // for string manipulation\r\n#include <vector>    // for dynamic arrays\r\n#include <algorithm> // for algorithms like sorting\r\n#include <cmath>     // for mathematical functions\r\n#include <iomanip>   // for formatting output\r\nusing namespace std;\r\n\r\nint main()\r\n{\r\n    int num;\r\n    cout << \"Enter a number: \";\r\n    cin >> num;\r\n    cout << \"You entered: \" << num << endl;\r\n    return 0;\r\n}"
     ],
     "description": "Creates a predefined snippet for C++"
   }
